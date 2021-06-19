@@ -20,8 +20,9 @@ def start_command(message):
 @bot.message_handler()
 def handle_any_message(message):
     parser.parse_message(message)
-    print(parser.get_city())
-    print(parser.get_currency())
+    print(parser.get_date())
+    print(parser.get_month())
+    print(parser.get_year())
 
     bot.send_message(message.chat.id, "#TODO")
 
