@@ -1,9 +1,11 @@
 import telebot
 
 from Parser import Parser
+from CurrenciesParser import CurrenciesParser
 
 bot = telebot.TeleBot('1805652371:AAH3fV6tl1UEteSjKdYqf788j6KNpk_5vZk')
 parser = Parser()
+curr_parser = CurrenciesParser()
 
 
 @bot.message_handler(commands=['start'])
@@ -20,11 +22,18 @@ def start_command(message):
 @bot.message_handler()
 def handle_any_message(message):
     parser.parse_message(message)
-    print(parser.get_date())
-    print(parser.get_month())
-    print(parser.get_year())
+    currency = parser.get_currency()
+    city = parser.get_city()
+    date = parser.get_date()
+    month = parser.get_month()
+    year = parser.get_year()
+    if currency is not None and date is not None and month is not None and year is not None:
+        price = curr_parser.get_curr(currency, date, month, year)
+        bot.send_message(message.chat.id, date + "." + month + "." + year + " курс валюты " \
+                         + currency.upper() + " был " + str(price) + " RUB")
 
-    bot.send_message(message.chat.id, "#TODO")
+    if city is not None and currency is not None:
+        bot.send_message(message.chat.id, "#TODO")
 
 
 bot.polling()
