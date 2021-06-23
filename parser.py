@@ -9,6 +9,7 @@ class Parser:
     years_data = pandas.read_csv("years.csv")
 
     city_name = None
+    city_url = None
     currency = None
     date = None
     month = None
@@ -29,6 +30,7 @@ class Parser:
         for i, curr in enumerate(self.cities_data["city_alias"]):
             if message.find(curr) != -1:
                 self.city_name = self.cities_data.iloc[i]["city_name"]
+                self.city_url = self.cities_data.iloc[i]["city_url"]
                 break
 
     def parse_currency(self, message):
@@ -61,8 +63,11 @@ class Parser:
                 self.year = str(self.years_data.iloc[i]["year_name"])
                 break
 
-    def get_city(self):
+    def get_city_name(self):
         return self.city_name
+
+    def get_city_url(self):
+        return self.city_url
 
     def get_currency(self):
         return self.currency
@@ -79,6 +84,7 @@ class Parser:
     def clear(self):
         self.currency = None
         self.city_name = None
+        self.city_url = None
         self.date = None
         self.month = None
         self.year = None
