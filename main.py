@@ -1,15 +1,23 @@
 import telebot
 import pandas
+import logging
+from datetime import datetime
 
 from Parser import Parser
 from CurrenciesParser import CurrenciesParser
 
-bot = telebot.TeleBot('1805652371:AAH3fV6tl1UEteSjKdYqf788j6KNpk_5vZk')
+bot = telebot.TeleBot("1805652371:AAH3fV6tl1UEteSjKdYqf788j6KNpk_5vZk")
 parser = Parser()
 curr_parser = CurrenciesParser()
 
+now = datetime.now()
+dt_string = now.strftime("%d-%m-%Y %H-%M-%S")
+logger = telebot.logger
+logging.basicConfig(filename="./logs/" + dt_string + ".log", filemode="w")
+telebot.logger.setLevel(logging.DEBUG)
 
-@bot.message_handler(commands=['start'])
+
+@bot.message_handler(commands=["start"])
 def start_command(message):
     bot.send_message(message.chat.id, "Здравствуйте! Данный бот показывает информацию по курсам валют")
     bot.send_message(message.chat.id, "Поддерживаемые валюты: USD, EUR, GBP, CNY, JPY")
