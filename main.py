@@ -34,7 +34,7 @@ def handle_any_message(message):
         bot.send_message(message.chat.id, date + "." + month + "." + year + " курс валюты " \
                          + currency.upper() + " был " + str(price) + " RUB")
 
-    if city_name is not None and currency is not None:
+    elif city_name is not None and currency is not None:
         prices = curr_parser.get_curr_city(currency, city_url)
         if prices is None:
             bot.send_message(message.chat.id, "По данному городу и валюте информация не найдена")
@@ -51,6 +51,9 @@ def handle_any_message(message):
                 msg += "По " + str(best_sell.iloc[i]["sell"]) + " в " + best_sell.loc[i]["bank"] + "\n"
 
             bot.send_message(message.chat.id, msg)
+
+    elif message.chat.type == "private":
+        bot.send_message(message.chat.id, "Сообщение не содержит валюты и даты или валюты и города")
 
 
 bot.polling()
