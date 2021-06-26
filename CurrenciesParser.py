@@ -32,5 +32,5 @@ class CurrenciesParser:
             bank.append(row.find("a").get_text())
             buy.append(float(row.find_all("td")[1].get_text().replace("\n", "").replace("\t", "").replace(",", ".")))
             sell.append(float(row.find_all("td")[2].get_text().replace("\n", "").replace("\t", "").replace(",", ".")))
-        data = pandas.DataFrame(list(zip(bank, buy, sell)), columns = ["bank", "buy", "sell"])
+        data = pandas.DataFrame(list(zip(bank, buy, sell)), columns=["bank", "buy", "sell"])
         return data
